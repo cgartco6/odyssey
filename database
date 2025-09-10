@@ -1,0 +1,26 @@
+# Replace SQLite with MySQL on your AfriHost package
+import mysql.connector
+
+def setup_database():
+    conn = mysql.connector.connect(
+        host='your-afrihost-mysql-server',
+        user='username',
+        password='password',
+        database='tactical_legends_db'
+    )
+    # Create tables with improved schema
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS missions (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255),
+            description TEXT,
+            difficulty INT,
+            duration_min INT,
+            token_reward INT,
+            ai_generated BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    # Add more tables for players, weapons, achievements, etc.
+    conn.commit()
